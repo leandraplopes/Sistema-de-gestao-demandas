@@ -1,16 +1,37 @@
-function cadastrarDemanda() {
+const btnSalvar = document.getElementById("btnSalvar");
+const listaDemandas = document.getElementById("listaDemandas");
+
+btnSalvar.addEventListener("click", function () {
+
   const titulo = document.getElementById("titulo").value;
   const descricao = document.getElementById("descricao").value;
   const status = document.getElementById("status").value;
 
   if (titulo === "" || descricao === "") {
-    alert("Preencha o título e a descrição da demanda.");
+    alert("Preencha o título e a descrição.");
     return;
   }
 
-  alert("Demanda cadastrada com sucesso!");
+  const demanda = document.createElement("div");
 
-  console.log("Título:", titulo);
-  console.log("Descrição:", descricao);
-  console.log("Status:", status);
-}
+  demanda.innerHTML = `
+    <h3>${titulo}</h3>
+    <p>${descricao}</p>
+
+    <label>Status:</label>
+
+    <select class="statusDemanda">
+      <option value="Aberta" ${status === "Aberta" ? "selected" : ""}>Aberta</option>
+      <option value="Em andamento" ${status === "Em andamento" ? "selected" : ""}>Em andamento</option>
+      <option value="Concluída" ${status === "Concluída" ? "selected" : ""}>Concluída</option>
+    </select>
+
+    <hr>
+  `;
+
+  listaDemandas.appendChild(demanda);
+
+  document.getElementById("titulo").value = "";
+  document.getElementById("descricao").value = "";
+
+});
