@@ -8,10 +8,76 @@
 </head>
 
 <body>
+
   <h1>Sistema de Gestão de Demandas</h1>
 
   <p>Bem-vindo ao sistema!</p>
 
-  <button>Nova demanda</button>
+  <button id="btnNovaDemanda">Nova demanda</button>
+
+  <div id="formulario" style="display: none; margin-top: 30px;">
+
+    <h2>Nova Demanda</h2>
+
+    <input
+      type="text"
+      id="titulo"
+      placeholder="Título da demanda"
+    >
+
+    <br><br>
+
+    <textarea
+      id="descricao"
+      placeholder="Descreva a demanda"
+      rows="5"
+      cols="40"
+    ></textarea>
+
+    <br><br>
+
+    <button id="btnSalvar">Salvar demanda</button>
+
+  </div>
+
+  <div id="listaDemandas" style="margin-top: 30px;"></div>
+
+  <script>
+    const btnNovaDemanda = document.getElementById("btnNovaDemanda");
+    const formulario = document.getElementById("formulario");
+    const btnSalvar = document.getElementById("btnSalvar");
+    const listaDemandas = document.getElementById("listaDemandas");
+
+    btnNovaDemanda.addEventListener("click", function() {
+      formulario.style.display = "block";
+    });
+
+    btnSalvar.addEventListener("click", function() {
+
+      const titulo = document.getElementById("titulo").value;
+      const descricao = document.getElementById("descricao").value;
+
+      if (titulo === "" || descricao === "") {
+        alert("Preencha o título e a descrição.");
+        return;
+      }
+
+      const demanda = document.createElement("div");
+
+      demanda.innerHTML = `
+        <h3>${titulo}</h3>
+        <p>${descricao}</p>
+        <hr>
+      `;
+
+      listaDemandas.appendChild(demanda);
+
+      document.getElementById("titulo").value = "";
+      document.getElementById("descricao").value = "";
+
+      formulario.style.display = "none";
+    });
+  </script>
+
 </body>
 </html>
