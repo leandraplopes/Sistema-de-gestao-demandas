@@ -1,49 +1,4 @@
-[20:11, 08/08/2026] leandra p lopess: <!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sistema de Gestão de Demandas</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-
-  <h1>Sistema de Gestão de Demandas</h1>
-
-  <p>Bem-vindo ao sistema!</p>
-
-  <button id="btnNovaDemanda">Nova demanda</button>
-
-  <div id="formulario" style="display: none; margin-top: 30px;">
-
-    <h2>Nova Demanda</h2>
-
-    <input
-      type="text"
-      id="titulo"
-      placeholder="Título da demanda"
-    >
-
-    <br><br>
-
-    <textarea
-      id="descricao"
-      placeholder="Descreva a demanda"
-      rows="5"
-      cols="40"
-    ></textarea>
-
-  <br><br>
-
-<label for="status">Status:</label>
-<select id="status">
-  <option value="Aberta">Aberta</option>
-  <option value="Em andamento">Em andamento</option>
-  <option value="Concluída">Concluída</option>
-</select>
- …
-[20:11, 08/08/2026] leandra p lopess: <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -81,15 +36,23 @@
 
     <br><br>
 
-    <label for="status">Status:</label>
+    <p><strong>Status:</strong></p>
 
-    <select id="status">
-      <option value="Aberta">Aberta</option>
-      <option value="Em andamento">Em andamento</option>
-      <option value="Concluída">Concluída</option>
-    </select>
+    <button type="button" class="btnStatus" data-status="Aberta">
+      Aberta
+    </button>
 
-    <br><br>
+    <button type="button" class="btnStatus" data-status="Em andamento">
+      Em andamento
+    </button>
+
+    <button type="button" class="btnStatus" data-status="Concluída">
+      Concluída
+    </button>
+
+    <p>Status selecionado: <strong id="statusSelecionado">Aberta</strong></p>
+
+    <br>
 
     <button id="btnSalvar">Cadastrar demanda</button>
 
@@ -97,7 +60,64 @@
 
   <div id="listaDemandas" style="margin-top: 30px;"></div>
 
-  <script src="script.js"></script>
+  <script>
+
+    const btnNovaDemanda = document.getElementById("btnNovaDemanda");
+    const formulario = document.getElementById("formulario");
+    const btnSalvar = document.getElementById("btnSalvar");
+    const listaDemandas = document.getElementById("listaDemandas");
+    const statusSelecionado = document.getElementById("statusSelecionado");
+
+    let statusAtual = "Aberta";
+
+    btnNovaDemanda.addEventListener("click", function() {
+      formulario.style.display = "block";
+    });
+
+    document.querySelectorAll(".btnStatus").forEach(function(botao) {
+
+      botao.addEventListener("click", function() {
+
+        statusAtual = botao.dataset.status;
+
+        statusSelecionado.textContent = statusAtual;
+
+      });
+
+    });
+
+    btnSalvar.addEventListener("click", function() {
+
+      const titulo = document.getElementById("titulo").value;
+      const descricao = document.getElementById("descricao").value;
+
+      if (titulo === "" || descricao === "") {
+        alert("Preencha o título e a descrição.");
+        return;
+      }
+
+      const demanda = document.createElement("div");
+
+      demanda.innerHTML = `
+        <h3>${titulo}</h3>
+        <p>${descricao}</p>
+        <p><strong>Status:</strong> ${statusAtual}</p>
+        <hr>
+      `;
+
+      listaDemandas.appendChild(demanda);
+
+      document.getElementById("titulo").value = "";
+      document.getElementById("descricao").value = "";
+
+      statusAtual = "Aberta";
+      statusSelecionado.textContent = "Aberta";
+
+      formulario.style.display = "none";
+
+    });
+
+  </script>
 
 </body>
 </html>
