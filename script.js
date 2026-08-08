@@ -1,5 +1,11 @@
+const btnNovaDemanda = document.getElementById("btnNovaDemanda");
+const formulario = document.getElementById("formulario");
 const btnSalvar = document.getElementById("btnSalvar");
 const listaDemandas = document.getElementById("listaDemandas");
+
+btnNovaDemanda.addEventListener("click", function () {
+  formulario.style.display = "block";
+});
 
 btnSalvar.addEventListener("click", function () {
 
@@ -17,13 +23,12 @@ btnSalvar.addEventListener("click", function () {
   demanda.innerHTML = `
     <h3>${titulo}</h3>
     <p>${descricao}</p>
-
     <label>Status:</label>
 
-    <select class="statusDemanda">
-      <option value="Aberta" ${status === "Aberta" ? "selected" : ""}>Aberta</option>
-      <option value="Em andamento" ${status === "Em andamento" ? "selected" : ""}>Em andamento</option>
-      <option value="Concluída" ${status === "Concluída" ? "selected" : ""}>Concluída</option>
+    <select>
+      <option ${status === "Aberta" ? "selected" : ""}>Aberta</option>
+      <option ${status === "Em andamento" ? "selected" : ""}>Em andamento</option>
+      <option ${status === "Concluída" ? "selected" : ""}>Concluída</option>
     </select>
 
     <hr>
@@ -34,4 +39,5 @@ btnSalvar.addEventListener("click", function () {
   document.getElementById("titulo").value = "";
   document.getElementById("descricao").value = "";
 
+  formulario.style.display = "none";
 });
