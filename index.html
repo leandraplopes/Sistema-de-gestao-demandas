@@ -38,19 +38,41 @@
 
     <p><strong>Status:</strong></p>
 
-    <button type="button" class="btnStatus" data-status="Aberta">
+    <button type="button" onclick="selecionarStatus('Aberta')">
       Aberta
     </button>
 
-    <button type="button" class="btnStatus" data-status="Em andamento">
+    <button type="button" onclick="selecionarStatus('Em andamento')">
       Em andamento
     </button>
 
-    <button type="button" class="btnStatus" data-status="Concluída">
+    <button type="button" onclick="selecionarStatus('Concluída')">
       Concluída
     </button>
 
-    <p>Status selecionado: <strong id="statusSelecionado">Aberta</strong></p>
+    <p>
+      Status selecionado:
+      <strong id="statusSelecionado">Aberta</strong>
+    </p>
+
+    <p><strong>Prioridade:</strong></p>
+
+    <button type="button" onclick="selecionarPrioridade('Baixa')">
+      Baixa
+    </button>
+
+    <button type="button" onclick="selecionarPrioridade('Média')">
+      Média
+    </button>
+
+    <button type="button" onclick="selecionarPrioridade('Alta')">
+      Alta
+    </button>
+
+    <p>
+      Prioridade selecionada:
+      <strong id="prioridadeSelecionada">Média</strong>
+    </p>
 
     <br>
 
@@ -62,41 +84,29 @@
 
   <script>
 
+    let statusAtual = "Aberta";
+    let prioridadeAtual = "Média";
+
     const btnNovaDemanda = document.getElementById("btnNovaDemanda");
     const formulario = document.getElementById("formulario");
     const btnSalvar = document.getElementById("btnSalvar");
     const listaDemandas = document.getElementById("listaDemandas");
-    const statusSelecionado = document.getElementById("statusSelecionado");
-
-    let statusAtual = "Aberta";
-    let prioridadeAtual = "Média";
 
     btnNovaDemanda.addEventListener("click", function() {
       formulario.style.display = "block";
     });
 
-    document.querySelectorAll(".btnStatus").forEach(function(botao) {
+    function selecionarStatus(status) {
+      statusAtual = status;
 
-      botao.addEventListener("click", function() {
+      document.getElementById("statusSelecionado").textContent = status;
+    }
 
-        statusAtual = botao.dataset.status;
+    function selecionarPrioridade(prioridade) {
+      prioridadeAtual = prioridade;
 
-        statusSelecionado.textContent = statusAtual;
-
-      });
-
-    });
-    document.querySelectorAll(".btnPrioridade").forEach(function(botao) {
-
-  botao.addEventListener("click", function() {
-
-    prioridadeAtual = botao.dataset.prioridade;
-
-    document.getElementById("prioridadeSelecionada").textContent = prioridadeAtual;
-
-  });
-
-});
+      document.getElementById("prioridadeSelecionada").textContent = prioridade;
+    }
 
     btnSalvar.addEventListener("click", function() {
 
@@ -114,6 +124,7 @@
         <h3>${titulo}</h3>
         <p>${descricao}</p>
         <p><strong>Status:</strong> ${statusAtual}</p>
+        <p><strong>Prioridade:</strong> ${prioridadeAtual}</p>
         <hr>
       `;
 
@@ -123,17 +134,10 @@
       document.getElementById("descricao").value = "";
 
       statusAtual = "Aberta";
-      let prioridadeAtual = "Média";
+      prioridadeAtual = "Média";
 
-      let prioridadeAtual = "Média";
-
-document.querySelectorAll(".btnPrioridade").forEach(function(botao) {
-  botao.addEventListener("click", function() {
-    prioridadeAtual = botao.dataset.prioridade;
-    document.getElementById("prioridadeSelecionada").textContent = prioridadeAtual;
-  });
-});
-      statusSelecionado.textContent = "Aberta";
+      document.getElementById("statusSelecionado").textContent = "Aberta";
+      document.getElementById("prioridadeSelecionada").textContent = "Média";
 
       formulario.style.display = "none";
 
@@ -143,18 +147,3 @@ document.querySelectorAll(".btnPrioridade").forEach(function(botao) {
 
 </body>
 </html>
-<p><strong>Prioridade:</strong></p>
-
-<button type="button" class="btnPrioridade" data-prioridade="Baixa">
-  Baixa
-</button>
-
-<button type="button" class="btnPrioridade" data-prioridade="Média">
-  Média
-</button>
-
-<button type="button" class="btnPrioridade" data-prioridade="Alta">
-  Alta
-</button>
-
-<p>Prioridade selecionada: <strong id="prioridadeSelecionada">Média</strong></p>
