@@ -87,11 +87,12 @@
     let statusAtual = "Aberta";
     let prioridadeAtual = "Média";
 
+    let demandas = JSON.parse(localStorage.getItem("demandas")) || [];
+
     const btnNovaDemanda = document.getElementById("btnNovaDemanda");
     const formulario = document.getElementById("formulario");
     const btnSalvar = document.getElementById("btnSalvar");
     const listaDemandas = document.getElementById("listaDemandas");
-    let demandas = JSON.parse(localStorage.getItem("demandas")) || [];
 
     btnNovaDemanda.addEventListener("click", function() {
       formulario.style.display = "block";
@@ -108,21 +109,25 @@
 
       document.getElementById("prioridadeSelecionada").textContent = prioridade;
     }
+
+    function mostrarDemanda(item) {
+
+      const demanda = document.createElement("div");
+
+      demanda.innerHTML = `
+        <h3>${item.titulo}</h3>
+        <p>${item.descricao}</p>
+        <p><strong>Status:</strong> ${item.status}</p>
+        <p><strong>Prioridade:</strong> ${item.prioridade}</p>
+        <hr>
+      `;
+
+      listaDemandas.appendChild(demanda);
+    }
+
     demandas.forEach(function(item) {
-
-  const demanda = document.createElement("div");
-
-  demanda.innerHTML = `
-    <h3>${item.titulo}</h3>
-    <p>${item.descricao}</p>
-    <p><strong>Status:</strong> ${item.status}</p>
-    <p><strong>Prioridade:</strong> ${item.prioridade}</p>
-    <hr>
-  `;
-
-  listaDemandas.appendChild(demanda);
-
-});
+      mostrarDemanda(item);
+    });
 
     btnSalvar.addEventListener("click", function() {
 
@@ -134,25 +139,18 @@
         return;
       }
 
-      const demanda = document.createElement("div");
+      const novaDemanda = {
+        titulo: titulo,
+        descricao: descricao,
+        status: statusAtual,
+        prioridade: prioridadeAtual
+      };
 
-      demanda.innerHTML = `
-        <h3>${titulo}</h3>
-        <p>${descricao}</p>
-        <p><strong>Status:</strong> ${statusAtual}</p>
-        <p><strong>Prioridade:</strong> ${prioridadeAtual}</p>
-        <hr>
-      `;
+      demandas.push(novaDemanda);
 
-      listaDemandas.appendChild(demanda);
-      demandas.push({
-  titulo: titulo,
-  descricao: descricao,
-  status: statusAtual,
-  prioridade: prioridadeAtual
-});
+      localStorage.setItem("demandas", JSON.stringify(demandas));
 
-localStorage.setItem("demandas", JSON.stringify(demandas));
+      mostrarDemanda(novaDemanda);
 
       document.getElementById("titulo").value = "";
       document.getElementById("descricao").value = "";
