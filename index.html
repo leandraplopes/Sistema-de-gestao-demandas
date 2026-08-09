@@ -123,6 +123,16 @@
       document.getElementById("descricao").value = "";
 
       statusAtual = "Aberta";
+      let prioridadeAtual = "Média";
+
+      let prioridadeAtual = "Média";
+
+document.querySelectorAll(".btnPrioridade").forEach(function(botao) {
+  botao.addEventListener("click", function() {
+    prioridadeAtual = botao.dataset.prioridade;
+    document.getElementById("prioridadeSelecionada").textContent = prioridadeAtual;
+  });
+});
       statusSelecionado.textContent = "Aberta";
 
       formulario.style.display = "none";
