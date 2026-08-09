@@ -91,6 +91,7 @@
     const formulario = document.getElementById("formulario");
     const btnSalvar = document.getElementById("btnSalvar");
     const listaDemandas = document.getElementById("listaDemandas");
+    let demandas = JSON.parse(localStorage.getItem("demandas")) || [];
 
     btnNovaDemanda.addEventListener("click", function() {
       formulario.style.display = "block";
@@ -107,6 +108,21 @@
 
       document.getElementById("prioridadeSelecionada").textContent = prioridade;
     }
+    demandas.forEach(function(item) {
+
+  const demanda = document.createElement("div");
+
+  demanda.innerHTML = `
+    <h3>${item.titulo}</h3>
+    <p>${item.descricao}</p>
+    <p><strong>Status:</strong> ${item.status}</p>
+    <p><strong>Prioridade:</strong> ${item.prioridade}</p>
+    <hr>
+  `;
+
+  listaDemandas.appendChild(demanda);
+
+});
 
     btnSalvar.addEventListener("click", function() {
 
@@ -129,6 +145,14 @@
       `;
 
       listaDemandas.appendChild(demanda);
+      demandas.push({
+  titulo: titulo,
+  descricao: descricao,
+  status: statusAtual,
+  prioridade: prioridadeAtual
+});
+
+localStorage.setItem("demandas", JSON.stringify(demandas));
 
       document.getElementById("titulo").value = "";
       document.getElementById("descricao").value = "";
